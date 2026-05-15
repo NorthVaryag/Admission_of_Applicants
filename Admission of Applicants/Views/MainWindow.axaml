@@ -9,12 +9,41 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Admission_of_Applicants">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+        <SplitView
+                   IsPaneOpen="{Binding IsPaneOpen}"
+                   DisplayMode="CompactInline"
+                   OpenPaneLength="300"
+                   CompactPaneLength="50"
+                   PaneBackground="MidnightBlue">
+                <SplitView.Pane>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content=">"></Button>
+                                <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content="Equipment"></Button>
+                                <Button Background="Teal" Command="{Binding EmployeesWindowStartCommand}" Content="Employees"></Button>
+                        </StackPanel>
+                </SplitView.Pane>
 
-    
-    
+                
+                <SplitView.Content>
+                        <DataGrid ItemsSource="{Binding Equipments}"
+                                  IsReadOnly="True"
+                                  CanUserReorderColumns="True"
+                                  CanUserResizeColumns="True"
+                                  CanUserSortColumns="True"
+                                  GridLinesVisibility="All"
+                                  AutoGenerateColumns="False"
+                                  BorderThickness="1" BorderBrush="Gray">
+                                <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Тип устройства"  Binding="{Binding DeviceType}"/>
+                                        <DataGridTextColumn Header="Оперативная память"  Binding="{Binding Ram}"/>
+                                        <DataGridTextColumn Header="Видеопамять" Binding="{Binding  Vram}" />
+                                        <DataGridTextColumn Header="Память" Binding="{Binding  Storage}" />
+                                        <DataGridTextColumn Header="Пропускная способность сети" Binding="{Binding NetworkThroughput}"/>
+                                        <DataGridTextColumn Header="Операционная система" Binding="{Binding Os}"/>
+                                        <DataGridTextColumn Header="Ответственный" Binding="{Binding FullName}"/>
+                                </DataGrid.Columns>
+                        </DataGrid>
+                </SplitView.Content>
+                
+        </SplitView>
 </Window>

@@ -9,23 +9,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Admission_of_Applicants.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class EmployeesViewModel : ViewModelBase
 {
-    [ObservableProperty] List<Equipment> _equipments;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly EquipmentRepository _equipmentRepository;
-
-    private Action _closeAction;
-    
+    public List<Employees> Employees { get; set; }
     [ObservableProperty]
     private bool _isPaneOpen = true;
-
-    public MainWindowViewModel(IServiceProvider serviceProvider, EquipmentRepository equipmentRepository)
-    {
-        _serviceProvider = serviceProvider;
-        Equipments = equipmentRepository.GetAllEquipment();
-    }
+    private readonly IServiceProvider _serviceProvider;
     
+    private Action _closeAction;
+    
+    public EmployeesViewModel(IServiceProvider serviceProvider, MainWindowViewModel mainWindowViewModel, EmployeesRepository  employeesRepository)
+    {
+        _isPaneOpen = mainWindowViewModel.IsPaneOpen;
+        _serviceProvider = serviceProvider;
+        Employees =  employeesRepository.GetAllEmployees();
+    }
+
+
     [RelayCommand]
     private void TogglePane() => IsPaneOpen = !IsPaneOpen;
     
@@ -33,12 +33,12 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         _closeAction  = action;
     }
-    
+
     [RelayCommand]
-    public void EmployeesWindowStart()
+    public void MainWindowStart()
     {
-        var vm = ActivatorUtilities.CreateInstance<EmployeesViewModel>(_serviceProvider);
-        var  win = _serviceProvider.GetRequiredService<EmployeesWindow>();
+        var vm = ActivatorUtilities.CreateInstance<MainWindowViewModel>(_serviceProvider);
+        var win = _serviceProvider.GetRequiredService<MainWindow>();
         win.DataContext = vm;
         win.Show();
         vm.CloseAction(win.Close);
