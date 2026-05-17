@@ -17,8 +17,10 @@
                 <SplitView.Pane>
                         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                                 <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content=">"></Button>
-                                <Button Background="Teal" Command="{Binding MainWindowStartCommand}" Content="Equipment"></Button>
-                                <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content="Employees"></Button>
+                                <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content="Equipment"></Button>
+                                <Button Background="Teal" Content="Employees"></Button>
+                                <Button Background="Teal" Command="{Binding TariffWindowStartCommand}" Content="Tariffs"></Button>
+                                <Button Background="Teal" Command="{Binding ClientWindowStartCommand}" Content="Clients"></Button>
                         </StackPanel>
                 </SplitView.Pane>
 

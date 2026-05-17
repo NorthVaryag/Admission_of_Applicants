@@ -41,5 +41,16 @@ public partial class TariffViewModel : ViewModelBase
         win.Show();
         vm.CloseAction(win.Close);
         _closeAction?.Invoke();
+    }    
+    
+    [RelayCommand]
+    public void ClientWindowStart()
+    {
+        var vm = ActivatorUtilities.CreateInstance<ClientViewModel>(_serviceProvider);
+        var  win = _serviceProvider.GetRequiredService<ClientWindow>();
+        win.DataContext = vm;
+        win.Show();
+        vm.CloseAction(win.Close);
+        _closeAction?.Invoke();
     }
 }

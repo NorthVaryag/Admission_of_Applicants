@@ -44,4 +44,26 @@ public partial class EmployeesViewModel : ViewModelBase
         vm.CloseAction(win.Close);
         _closeAction?.Invoke();
     }
+    
+    [RelayCommand]
+    public void TariffWindowStart()
+    {
+        var vm = ActivatorUtilities.CreateInstance<TariffViewModel>(_serviceProvider);
+        var  win = _serviceProvider.GetRequiredService<TariffWindow>();
+        win.DataContext = vm;
+        win.Show();
+        vm.CloseAction(win.Close);
+        _closeAction?.Invoke();
+    } 
+    
+    [RelayCommand]
+    public void ClientWindowStart()
+    {
+        var vm = ActivatorUtilities.CreateInstance<ClientViewModel>(_serviceProvider);
+        var  win = _serviceProvider.GetRequiredService<ClientWindow>();
+        win.DataContext = vm;
+        win.Show();
+        vm.CloseAction(win.Close);
+        _closeAction?.Invoke();
+    }
 }
