@@ -36,6 +36,9 @@ sealed class Program
                 s.AddTransient<TariffsRepository>();
                 s.AddTransient<TariffViewModel>();
                 s.AddTransient<TariffWindow>();
+                s.AddTransient<ClientRepository>();
+                s.AddTransient<ClientViewModel>();
+                s.AddTransient<ClientWindow>();
             }).
             Build();
         BuildAvaloniaApp(host.Services)

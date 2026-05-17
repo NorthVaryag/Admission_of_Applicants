@@ -21,6 +21,7 @@
                                 <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content="Equipment"></Button>
                                 <Button Background="Teal" Command="{Binding EmployeesWindowStartCommand}" Content="Employees"></Button>
                                 <Button Background="Teal" Command="{Binding TariffWindowStartCommand}" Content="Tariffs"></Button>
+                                <Button Background="Teal" Command="{Binding ClientWindowStartCommand}" Content="Clients"></Button>
                         </StackPanel>
                 </SplitView.Pane>
 

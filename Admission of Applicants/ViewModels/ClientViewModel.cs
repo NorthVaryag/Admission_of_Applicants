@@ -9,23 +9,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Admission_of_Applicants.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class ClientViewModel : ViewModelBase
 {
-    [ObservableProperty] List<Equipment> _equipments;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly EquipmentRepository _equipmentRepository;
-
-    private Action _closeAction;
-    
+    public List<Client> Clients { get; set; }
     [ObservableProperty]
     private bool _isPaneOpen = true;
-
-    public MainWindowViewModel(IServiceProvider serviceProvider, EquipmentRepository equipmentRepository)
-    {
-        _serviceProvider = serviceProvider;
-        Equipments = equipmentRepository.GetAllEquipment();
-    }
+    private readonly IServiceProvider _serviceProvider;
     
+    private Action _closeAction;
+    
+    public ClientViewModel(IServiceProvider serviceProvider, MainWindowViewModel mainWindowViewModel, ClientRepository clientRepository)
+    {
+        _isPaneOpen = mainWindowViewModel.IsPaneOpen;
+        _serviceProvider = serviceProvider;
+        Clients =  clientRepository.GetAllClient();
+    }
+
+
     [RelayCommand]
     private void TogglePane() => IsPaneOpen = !IsPaneOpen;
     
@@ -33,7 +33,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         _closeAction  = action;
     }
-    
+
     [RelayCommand]
     public void EmployeesWindowStart()
     {
@@ -54,13 +54,13 @@ public partial class MainWindowViewModel : ViewModelBase
         win.Show();
         vm.CloseAction(win.Close);
         _closeAction?.Invoke();
-    }    
+    }
     
     [RelayCommand]
-    public void ClientWindowStart()
+    public void MainWindowStart()
     {
-        var vm = ActivatorUtilities.CreateInstance<ClientViewModel>(_serviceProvider);
-        var  win = _serviceProvider.GetRequiredService<ClientWindow>();
+        var vm = ActivatorUtilities.CreateInstance<MainWindowViewModel>(_serviceProvider);
+        var win = _serviceProvider.GetRequiredService<MainWindow>();
         win.DataContext = vm;
         win.Show();
         vm.CloseAction(win.Close);
