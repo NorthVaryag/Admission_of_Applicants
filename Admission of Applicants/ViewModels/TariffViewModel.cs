@@ -9,22 +9,20 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Admission_of_Applicants.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class TariffViewModel : ViewModelBase
 {
-    [ObservableProperty] List<Equipment> _equipments;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly EquipmentRepository _equipmentRepository;
-
-    private Action _closeAction;
-    
+    public List<Tariffs> Tariffs { get; set; }
     [ObservableProperty]
     private bool _isPaneOpen = true;
-
-    public MainWindowViewModel(IServiceProvider serviceProvider, EquipmentRepository equipmentRepository)
+    private readonly IServiceProvider _serviceProvider;
+    
+    private Action _closeAction;
+    
+    public TariffViewModel(IServiceProvider serviceProvider, TariffsRepository tariffsRepository)
     {
         _serviceProvider = serviceProvider;
-        Equipments = equipmentRepository.GetAllEquipment();
-    }
+        Tariffs = tariffsRepository.GetAllTariffs();
+    } 
     
     [RelayCommand]
     private void TogglePane() => IsPaneOpen = !IsPaneOpen;
@@ -39,17 +37,6 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var vm = ActivatorUtilities.CreateInstance<EmployeesViewModel>(_serviceProvider);
         var  win = _serviceProvider.GetRequiredService<EmployeesWindow>();
-        win.DataContext = vm;
-        win.Show();
-        vm.CloseAction(win.Close);
-        _closeAction?.Invoke();
-    }
-    
-    [RelayCommand]
-    public void TariffWindowStart()
-    {
-        var vm = ActivatorUtilities.CreateInstance<TariffViewModel>(_serviceProvider);
-        var  win = _serviceProvider.GetRequiredService<TariffWindow>();
         win.DataContext = vm;
         win.Show();
         vm.CloseAction(win.Close);

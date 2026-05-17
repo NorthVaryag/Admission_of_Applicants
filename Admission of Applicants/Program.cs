@@ -33,6 +33,9 @@ sealed class Program
                 s.AddTransient<EmployeesWindow>();
                 s.AddTransient<EmployeesViewModel>();
                 s.AddTransient<EmployeesRepository>();
+                s.AddTransient<TariffsRepository>();
+                s.AddTransient<TariffViewModel>();
+                s.AddTransient<TariffWindow>();
             }).
             Build();
         BuildAvaloniaApp(host.Services)

@@ -1,14 +1,13 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Admission_of_Applicants.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Admission_of_Applicants.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Admission_of_Applicants.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Admission_of_Applicants">
-
+        x:Class="Admission_of_Applicants.Views.TariffWindow"
+        x:DataType="viewModels:TariffViewModel"
+        Title="TariffWindow">
+        
         <SplitView
                    IsPaneOpen="{Binding IsPaneOpen}"
                    DisplayMode="CompactInline"
@@ -20,13 +19,12 @@
                                 <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content=">"></Button>
                                 <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content="Equipment"></Button>
                                 <Button Background="Teal" Command="{Binding EmployeesWindowStartCommand}" Content="Employees"></Button>
-                                <Button Background="Teal" Command="{Binding TariffWindowStartCommand}" Content="Tariffs"></Button>
                         </StackPanel>
                 </SplitView.Pane>
 
                 
                 <SplitView.Content>
-                        <DataGrid ItemsSource="{Binding Equipments}"
+                        <DataGrid ItemsSource="{Binding Tariffs}"
                                   IsReadOnly="True"
                                   CanUserReorderColumns="True"
                                   CanUserResizeColumns="True"
@@ -35,16 +33,12 @@
                                   AutoGenerateColumns="False"
                                   BorderThickness="1" BorderBrush="Gray">
                                 <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Тип устройства"  Binding="{Binding DeviceType}"/>
-                                        <DataGridTextColumn Header="Оперативная память"  Binding="{Binding Ram}"/>
-                                        <DataGridTextColumn Header="Видеопамять" Binding="{Binding  Vram}" />
-                                        <DataGridTextColumn Header="Память" Binding="{Binding  Storage}" />
-                                        <DataGridTextColumn Header="Пропускная способность сети" Binding="{Binding NetworkThroughput}"/>
-                                        <DataGridTextColumn Header="Операционная система" Binding="{Binding Os}"/>
-                                        <DataGridTextColumn Header="Ответственный" Binding="{Binding FullName}"/>
+                                        <DataGridTextColumn Header="Название тарифа"  Binding="{Binding TariffName}"/>
+                                        <DataGridTextColumn Header="Цена в месяц" Binding="{Binding  CostMonth}" />
                                 </DataGrid.Columns>
                         </DataGrid>
                 </SplitView.Content>
                 
         </SplitView>
+        
 </Window>
