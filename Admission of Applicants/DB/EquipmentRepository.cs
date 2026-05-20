@@ -58,4 +58,80 @@ public class EquipmentRepository
         }
         return serviceList;
     }
+
+   public void InsertEquipment(Equipment equipment)
+    {
+        try
+        {
+            connection.Open();
+            string insertSql = @"INSERT INTO equipments 
+                (device_type_id, ram, vram, storage, network_throughput, os_id, employee_id, device_cost) 
+                VALUES 
+                (COALESCE((SELECT Id FROM device_types WHERE Name = @deviceType LIMIT 1), 1), 
+                 @ram, @vram, @storage, @networkThroughput, 
+                 COALESCE((SELECT Id FROM os_types WHERE Name = @os LIMIT 1), 1), 
+                 COALESCE((SELECT Id FROM employees WHERE first_name = @empName LIMIT 1), 1), 
+                 @deviceCost)";
+
+            MySqlCommand insertCommand = new MySqlCommand(insertSql, connection);
+            insertCommand.Parameters.AddWithValue("@deviceType", equipment.DeviceType);
+            insertCommand.Parameters.AddWithValue("@ram", equipment.Ram);
+            insertCommand.Parameters.AddWithValue("@vram", equipment.Vram);
+            insertCommand.Parameters.AddWithValue("@storage", equipment.Storage);
+            insertCommand.Parameters.AddWithValue("@networkThroughput", equipment.NetworkThroughput);
+            insertCommand.Parameters.AddWithValue("@os", equipment.Os);
+            insertCommand.Parameters.AddWithValue("@empName", equipment.EmployeeName);
+            insertCommand.Parameters.AddWithValue("@deviceCost", equipment.DeviceCost);
+            
+            insertCommand.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Insert: {ex.Message}");
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    public void UpdateEquipment(Equipment equipment)
+    {
+        try
+        {
+            connection.Open();
+            string updateSql = @"UPDATE equipments SET 
+                device_type_id = COALESCE((SELECT Id FROM device_types WHERE Name = @deviceType LIMIT 1), 1), 
+                ram = @ram, 
+                vram = @vram, 
+                storage = @storage, 
+                network_throughput = @networkThroughput, 
+                os_id = COALESCE((SELECT Id FROM os_types WHERE Name = @os LIMIT 1), 1), 
+                employee_id = COALESCE((SELECT Id FROM employees WHERE first_name = @empName LIMIT 1), 1), 
+                device_cost = @deviceCost 
+                WHERE id = @id";
+
+            MySqlCommand updateCommand = new MySqlCommand(updateSql, connection);
+            updateCommand.Parameters.AddWithValue("@deviceType", equipment.DeviceType);
+            updateCommand.Parameters.AddWithValue("@ram", equipment.Ram);
+            updateCommand.Parameters.AddWithValue("@vram", equipment.Vram);
+            updateCommand.Parameters.AddWithValue("@storage", equipment.Storage);
+            updateCommand.Parameters.AddWithValue("@networkThroughput", equipment.NetworkThroughput);
+            updateCommand.Parameters.AddWithValue("@os", equipment.Os);
+            updateCommand.Parameters.AddWithValue("@empName", equipment.EmployeeName);
+            updateCommand.Parameters.AddWithValue("@deviceCost", equipment.DeviceCost);
+            updateCommand.Parameters.AddWithValue("@id", equipment.Id);
+            
+            updateCommand.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Update: {ex.Message}");
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
 }

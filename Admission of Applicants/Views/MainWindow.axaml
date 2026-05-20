@@ -8,7 +8,11 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="Admission_of_Applicants">
-
+        
+        <Design.DataContext>
+                <vm:MainWindowViewModel></vm:MainWindowViewModel>
+        </Design.DataContext>
+        
         <SplitView
                    IsPaneOpen="{Binding IsPaneOpen}"
                    DisplayMode="CompactInline"
@@ -18,7 +22,7 @@
                 <SplitView.Pane>
                         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
                                 <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content=">"></Button>
-                                <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content="Equipment"></Button>
+                                <Button Background="Teal" Content="Equipment"></Button>
                                 <Button Background="Teal" Command="{Binding EmployeesWindowStartCommand}" Content="Employees"></Button>
                                 <Button Background="Teal" Command="{Binding TariffWindowStartCommand}" Content="Tariffs"></Button>
                                 <Button Background="Teal" Command="{Binding ClientWindowStartCommand}" Content="Clients"></Button>
@@ -27,25 +31,102 @@
 
                 
                 <SplitView.Content>
+                        <StackPanel>
+                        <Grid Margin="12"
+                              RowDefinitions="Auto *">
+                                
+                                <Border Background="Brown" 
+                                        CornerRadius="8,8,0,0" 
+                                        Padding="10,8">
+                                </Border>
+                                
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" >
+                                        <Button HorizontalAlignment="Left"
+                                                Background="AntiqueWhite"
+                                                CornerRadius="8,8,8,8" 
+                                                Padding="10,8"
+                                                Command="{Binding AddEquipmentCommand}"
+                                                >Добавить</Button>
+                                        <Button Margin="9" HorizontalAlignment="Right"
+                                                Background="AntiqueWhite"
+                                                CornerRadius="8,8,8,8" 
+                                                Padding="10,8"
+                                                Command="{Binding SaveEquipmentCommand}"
+                                        >Сохранить</Button>
+                                </StackPanel>
+                        
                         <DataGrid ItemsSource="{Binding Equipments}"
-                                  IsReadOnly="True"
+                                  IsReadOnly="False"
                                   CanUserReorderColumns="True"
                                   CanUserResizeColumns="True"
                                   CanUserSortColumns="True"
                                   GridLinesVisibility="All"
                                   AutoGenerateColumns="False"
-                                  BorderThickness="1" BorderBrush="Gray">
+                                  BorderThickness="1" BorderBrush="Gray"
+                                  Grid.Row="1">
                                 <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Тип устройства"  Binding="{Binding DeviceType}"/>
+                                        
+                                        <DataGridTemplateColumn Header="Тип устройства">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                                <TextBlock Text="{Binding DeviceType}" VerticalAlignment="Center" Margin="10,0"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                                <DataGridTemplateColumn.CellEditingTemplate>
+                                                        <DataTemplate>
+                                                                <ComboBox ItemsSource="{Binding $parent[DataGrid].((vm:MainWindowViewModel)DataContext).DeviceTypes}"
+                                                                          DisplayMemberBinding="{Binding DeviceTypeName}"
+                                                                          SelectedValueBinding="{Binding DeviceTypeName}"
+                                                                          SelectedValue="{Binding DeviceType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                          HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellEditingTemplate>
+                                        </DataGridTemplateColumn>
+                                        <!--<DataGridTextColumn Header="Тип устройства"  Binding="{Binding DeviceType}"/>-->
                                         <DataGridTextColumn Header="Оперативная память"  Binding="{Binding Ram}"/>
                                         <DataGridTextColumn Header="Видеопамять" Binding="{Binding  Vram}" />
                                         <DataGridTextColumn Header="Память" Binding="{Binding  Storage}" />
                                         <DataGridTextColumn Header="Пропускная способность сети" Binding="{Binding NetworkThroughput}"/>
-                                        <DataGridTextColumn Header="Операционная система" Binding="{Binding Os}"/>
-                                        <DataGridTextColumn Header="Ответственный" Binding="{Binding FullName}"/>
+                                        <DataGridTemplateColumn Header="Операционная система">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                                <TextBlock Text="{Binding Os}" VerticalAlignment="Center" Margin="10,0"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                                <DataGridTemplateColumn.CellEditingTemplate>
+                                                        <DataTemplate>
+                                                                <ComboBox ItemsSource="{Binding $parent[DataGrid].((vm:MainWindowViewModel)DataContext).OsTypes}"
+                                                                          DisplayMemberBinding="{Binding OsName}"
+                                                                          SelectedValueBinding="{Binding OsName}"
+                                                                          SelectedValue="{Binding Os, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                          HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellEditingTemplate>
+                                        </DataGridTemplateColumn>
+                                        <!--<DataGridTextColumn Header="Операционная система" Binding="{Binding Os}"/>-->
+                                        <!--<DataGridTextColumn Header="Ответственный" Binding="{Binding FullName}"/>-->
+                                        <DataGridTemplateColumn Header="Ответственный">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                                <TextBlock Text="{Binding FullName}" VerticalAlignment="Center" Margin="10,0"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+
+                                                <DataGridTemplateColumn.CellEditingTemplate>
+                                                        <DataTemplate>
+                                                                <ComboBox ItemsSource="{Binding $parent[DataGrid].((vm:MainWindowViewModel)DataContext).Employees}"
+                                                                          DisplayMemberBinding="{Binding FullName}"
+                                                                          SelectedValueBinding="{Binding FirstName}"
+                                                                          SelectedValue="{Binding EmployeeName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                          HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellEditingTemplate>
+                                        </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                         </DataGrid>
+                         </Grid>
+                        </StackPanel>
                 </SplitView.Content>
-                
+               
         </SplitView>
 </Window>
