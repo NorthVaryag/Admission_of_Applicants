@@ -11,7 +11,7 @@ public class Employees
     public int Age { get; set; }
     public string NumberPhone { get; set; }
     public string Email { get; set; }
-    public string Adress { get; set; }
+    public string Address { get; set; }
     public int Experience { get; set; }
     public decimal Salary { get; set; }
 }

@@ -86,7 +86,7 @@
                 
                 <SplitView.Content>
                         <DataGrid ItemsSource="{Binding Clients}"
-                                  IsReadOnly="True"
+                                  IsReadOnly="False"
                                   CanUserReorderColumns="True"
                                   CanUserResizeColumns="True"
                                   CanUserSortColumns="True"

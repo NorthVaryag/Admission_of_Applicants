@@ -86,7 +86,6 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var emptyEquipment = new Equipment 
         { 
-            // Если база пустая, пишем просто пробел (или "Сервер", если хотите по умолчанию сервер)
             DeviceType = _deviceTypes.FirstOrDefault()?.DeviceTypeName ?? "Неизвестное устройство", 
         
             Os = _osTypes.FirstOrDefault()?.OsName ?? "Без ОС",
