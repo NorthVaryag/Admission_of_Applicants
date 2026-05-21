@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Admission_of_Applicants.DB;
 using Admission_of_Applicants.Models;
 using Admission_of_Applicants.Models.Types;
@@ -20,6 +21,8 @@ public partial class MainWindowViewModel : ViewModelBase
     private readonly IServiceProvider _serviceProvider;
     private readonly EquipmentRepository _equipmentRepository;
 
+    [ObservableProperty] private Equipment _selectedEquipment;
+    
     private Action _closeAction;
     
     [ObservableProperty]
@@ -83,16 +86,21 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var emptyEquipment = new Equipment 
         { 
-            /*DeviceType = _deviceTypes.Count > 0 ? _deviceTypes[0].DeviceTypeName : "Сервер", 
-            Os = _osTypes.Count > 0 ? _osTypes[0].OsName : "Без ОС", 
-            // Подставляем имя первого сотрудника из базы, чтобы репозиторий не получил null/пустоту:
-            EmployeeName = _employees.Count > 0 ? _employees[0].FirstName : "Администратор", 
-            EmployeeLastName = "",
+            // Если база пустая, пишем просто пробел (или "Сервер", если хотите по умолчанию сервер)
+            DeviceType = _deviceTypes.FirstOrDefault()?.DeviceTypeName ?? "Неизвестное устройство", 
+        
+            Os = _osTypes.FirstOrDefault()?.OsName ?? "Без ОС",
+        
+            EmployeeName = _employees.FirstOrDefault()?.FirstName ?? " ", 
+            EmployeeLastName = _employees.FirstOrDefault()?.LastName ?? "",
+        
             Ram = 0,
             Vram = 0,
             Storage = 0,
-            NetworkThroughput = 0*/
+            NetworkThroughput = 0,
+            DeviceCost = 0
         };
+    
         Equipments.Add(emptyEquipment);
     }
 
@@ -111,5 +119,18 @@ public partial class MainWindowViewModel : ViewModelBase
             }
         }
         Equipments = new ObservableCollection<Equipment>(_equipmentRepository.GetAllEquipment());
+    }
+    
+    [RelayCommand]
+    public void DeleteEquipment()
+    {
+        if (SelectedEquipment == null) return;
+
+        if (SelectedEquipment.Id != 0)
+        {
+            _equipmentRepository.DeleteEquipment(SelectedEquipment.Id);
+        }
+
+        Equipments.Remove(SelectedEquipment);
     }
 }

@@ -134,4 +134,25 @@ public class EquipmentRepository
         }
     }
 
+    public void DeleteEquipment(int id)
+    {
+        try
+        {
+            connection.Open();
+            string deleteSql = "DELETE FROM equipments WHERE id = @id";
+            using (var deleteCommand = new MySqlCommand(deleteSql, connection))
+            {
+                deleteCommand.Parameters.AddWithValue("@id", id);
+                deleteCommand.ExecuteNonQuery();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Delete: {ex.Message}");
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
 }

@@ -12,15 +12,74 @@
                    IsPaneOpen="{Binding IsPaneOpen}"
                    DisplayMode="CompactInline"
                    OpenPaneLength="300"
-                   CompactPaneLength="50"
+                   CompactPaneLength="53"
                    PaneBackground="MidnightBlue">
+                
                 <SplitView.Pane>
-                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-                                <Button Background="Teal" Command="{Binding TogglePaneCommand}" Content=">"></Button>
-                                <Button Background="Teal" Command="{Binding MainWindowStartCommand}" Content="Equipment"></Button>
-                                <Button Background="Teal" Command="{Binding EmployeesWindowStartCommand}" Content="Employees"></Button>
-                                <Button Background="Teal" Content="Tariffs"></Button>
-                                <Button Background="Teal" Command="{Binding ClientWindowStartCommand}" Content="Clients"></Button>
+                        <StackPanel Background="#2C3E50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <Button Background="Transparent" 
+                                                Foreground="White"
+                                                FontSize="16"
+                                                Command="{Binding TogglePaneCommand}" 
+                                                Content="☰" 
+                                                Margin="10,10,10,20"
+                                                HorizontalAlignment="Left">
+                                        
+                                </Button>
+        
+                                <Button Background="Transparent" 
+                                        Foreground="#BDC3C7"
+                                        Command="{Binding MainWindowStartCommand}"
+                                        Height="40"
+                                        Margin="5,2"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="10,0">
+                                                <TextBlock Text="💻 " Margin="0,0,10,0"/>
+                                                <TextBlock Text="Устройства"/>
+                                        </StackPanel>
+                                </Button>
+
+                                <Button Background="Transparent" 
+                                        Foreground="#BDC3C7"
+                                        Command="{Binding EmployeesWindowStartCommand}"
+                                        Height="40"
+                                        Margin="5,2"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="10,0">
+                                                <TextBlock Text="👥 " Margin="0,0,10,0"/>
+                                                <TextBlock Text="Сотрудники"/>
+                                        </StackPanel>
+                                </Button>
+
+                                <Button Background="#16A085" 
+                                        Foreground="White"
+                                        Height="40"
+                                        Margin="5,2"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="10,0">
+                                                <TextBlock Text="💳 " Margin="0,0,10,0"/>
+                                                <TextBlock Text="Тарифы"/>
+                                        </StackPanel>
+                                </Button>
+                                <Button Background="Transparent" 
+                                        Foreground="#BDC3C7"
+                                        Command="{Binding ClientWindowStartCommand}"
+                                        Height="40"
+                                        Margin="5,2"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="10,0">
+                                                <TextBlock Text="🤝 " Margin="0,0,10,0"/>
+                                                <TextBlock Text="Клиенты"/>
+                                        </StackPanel>
+                                </Button>
                         </StackPanel>
                 </SplitView.Pane>
 
