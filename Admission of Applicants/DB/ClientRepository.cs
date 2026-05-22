@@ -50,4 +50,78 @@ public class ClientRepository
         }
         return clientList;
     }
+    
+    public void InsertClient(Client client)
+    {
+        // Предполагаем, что id_type = 1 и tariff_id = 1 для дефолтных значений
+        string sql = "insert into clients (display_name, monthly_payment, id_type, tariff_id, is_custom) " +
+                     "values (@DisplayName, @MonthlyPayment, 1, 1, @IsCustom)";
+        try
+        {
+            connection.Open();
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@DisplayName", client.DisplayName);
+                mc.Parameters.AddWithValue("@MonthlyPayment", client.MonthlyPayment);
+                mc.Parameters.AddWithValue("@IsCustom", client.IsCustom);
+                mc.ExecuteNonQuery();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    public void UpdateClient(Client client)
+    {
+        string sql = "update clients set display_name = @DisplayName, monthly_payment = @MonthlyPayment, " +
+                     "is_custom = @IsCustom where id = @Id";
+        try
+        {
+            connection.Open();
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@DisplayName", client.DisplayName);
+                mc.Parameters.AddWithValue("@MonthlyPayment", client.MonthlyPayment);
+                mc.Parameters.AddWithValue("@IsCustom", client.IsCustom);
+                mc.Parameters.AddWithValue("@Id", client.Id);
+                mc.ExecuteNonQuery();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    public void DeleteClient(int id)
+    {
+        string sql = "delete from clients where id = @Id";
+        try
+        {
+            connection.Open();
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@Id", id);
+                mc.ExecuteNonQuery();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
 }

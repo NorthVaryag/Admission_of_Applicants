@@ -85,21 +85,91 @@
 
                 
                 <SplitView.Content>
+                        <Grid Margin="12"
+                              RowDefinitions="Auto *">
+                                
+                                <Border Background="Brown" 
+                                        CornerRadius="8,8,0,0" 
+                                        Padding="10,8">
+                                </Border>
+                                
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" >
+                                        <Button HorizontalAlignment="Left"
+                                                Margin="9,0" 
+                                                Background="Crimson" 
+                                                Foreground="White"
+                                                CornerRadius="8" 
+                                                Padding="10,8"
+                                                Command="{Binding DeleteClientCommand}"
+                                                >Удалить</Button>
+                                        <Button HorizontalAlignment="Center"
+                                                Background="AntiqueWhite"
+                                                CornerRadius="8,8,8,8" 
+                                                Padding="10,8"
+                                                Command="{Binding AddClientCommand}"
+                                        >Добавить</Button>
+                                        <Button Margin="9" HorizontalAlignment="Right"
+                                                Background="AntiqueWhite"
+                                                CornerRadius="8,8,8,8" 
+                                                Padding="10,8"
+                                                Command="{Binding SaveClientCommand}"
+                                        >Сохранить</Button>
+                                </StackPanel>
+                                
                         <DataGrid ItemsSource="{Binding Clients}"
+                                  SelectedItem="{Binding SelectedClient, Mode=TwoWay}"
                                   IsReadOnly="False"
                                   CanUserReorderColumns="True"
                                   CanUserResizeColumns="True"
                                   CanUserSortColumns="True"
                                   GridLinesVisibility="All"
                                   AutoGenerateColumns="False"
-                                  BorderThickness="1" BorderBrush="Gray">
+                                  BorderThickness="1" BorderBrush="Gray"
+                                  Grid.Row="1">
                                 <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Тип клиента"  Binding="{Binding NameType}"/>
+                                        <!--<DataGridTextColumn Header="Тип клиента"  Binding="{Binding NameType}"/>-->
+                                        
+                                        <DataGridTemplateColumn Header="Тип клиента">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                                <TextBlock Text="{Binding NameType}" VerticalAlignment="Center" Margin="10,0"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                
+                                                <DataGridTemplateColumn.CellEditingTemplate>
+                                                        <DataTemplate>
+                                                                <ComboBox ItemsSource="{Binding $parent[DataGrid].((viewModels:ClientViewModel)DataContext).ClientTypes}"
+                                                                          DisplayMemberBinding="{Binding NameType}"
+                                                                          SelectedValueBinding="{Binding NameType}"
+                                                                          SelectedValue="{Binding NameType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                          HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellEditingTemplate>
+                                        </DataGridTemplateColumn>
                                         <DataGridTextColumn Header="Название организации, клиента"  Binding="{Binding DisplayName}"/>
-                                        <DataGridTextColumn Header="Название тарифа"  Binding="{Binding TariffName}"/>
+                                        <!--<DataGridTextColumn Header="Название тарифа"  Binding="{Binding TariffName}"/>-->
+                                        
+                                        <DataGridTemplateColumn Header="Название тарифа">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                                <TextBlock Text="{Binding TariffName}" VerticalAlignment="Center" Margin="10,0"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                                <DataGridTemplateColumn.CellEditingTemplate>
+                                                        <DataTemplate>
+                                                                <ComboBox ItemsSource="{Binding $parent[DataGrid].((viewModels:ClientViewModel)DataContext).Tariffs}"
+                                                                          DisplayMemberBinding="{Binding TariffName}"
+                                                                          SelectedValueBinding="{Binding TariffName}"
+                                                                          SelectedValue="{Binding TariffName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                          HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellEditingTemplate>
+                                        </DataGridTemplateColumn>
+                                        
                                         <DataGridTextColumn Header="цена в месяц"  Binding="{Binding MonthlyPayment}"/>
                                 </DataGrid.Columns>
                         </DataGrid>
+                        </Grid>
                 </SplitView.Content>
         </SplitView>
 </Window>

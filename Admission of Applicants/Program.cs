@@ -41,6 +41,7 @@ sealed class Program
                 s.AddTransient<ClientWindow>();
                 s.AddTransient<TypeDeviceRepository>();
                 s.AddTransient<OsTypeRepository>();
+                s.AddTransient<ClientTypeRepository>();
             }).
             Build();
         BuildAvaloniaApp(host.Services)
