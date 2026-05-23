@@ -11,17 +11,21 @@ namespace Admission_of_Applicants.ViewModels;
 
 public partial class TariffViewModel : ViewModelBase
 {
-    public List<Tariffs> Tariffs { get; set; }
-    [ObservableProperty]
-    private bool _isPaneOpen = true;
+    private readonly TariffsRepository _tariffsRepository;
+    //public List<Tariffs> _tariffs { get; set; }
+    [ObservableProperty] private List<Tariffs> _tariffs;
+    [ObservableProperty] private bool _isPaneOpen = true;
     private readonly IServiceProvider _serviceProvider;
+    [ObservableProperty] private Tariffs? _selectedTariff;
     
     private Action _closeAction;
     
     public TariffViewModel(IServiceProvider serviceProvider, TariffsRepository tariffsRepository)
     {
         _serviceProvider = serviceProvider;
-        Tariffs = tariffsRepository.GetAllTariffs();
+        //Tariffs = tariffsRepository.GetAllTariffs();
+        _tariffsRepository = tariffsRepository;
+        Tariffs = tariffsRepository.GetAllTariffs() ?? new List<Tariffs>();
     } 
     
     [RelayCommand]
@@ -63,5 +67,57 @@ public partial class TariffViewModel : ViewModelBase
         win.Show();
         vm.CloseAction(win.Close);
         _closeAction?.Invoke();
+    }
+    
+    
+    [RelayCommand]
+    public void AddTariff()
+    {
+        var newTariff = new Tariffs
+        {
+            TariffName = "Новый тариф",
+            CostMonth = 0
+        };
+
+        var tempList = new List<Tariffs>(Tariffs ?? new List<Tariffs>());
+        tempList.Add(newTariff);
+        Tariffs = tempList;
+    }
+
+    [RelayCommand]
+    public void DeleteTariff()
+    {
+        if (SelectedTariff == null) return;
+
+        if (SelectedTariff.Id != 0)
+        {
+            _tariffsRepository.DeleteTariff(SelectedTariff.Id);
+        }
+
+        var tempList = new List<Tariffs>(Tariffs ?? new List<Tariffs>());
+        tempList.Remove(SelectedTariff);
+        Tariffs = tempList;
+        
+        SelectedTariff = null;
+    }
+
+    [RelayCommand]
+    public void SaveTariffs()
+    {
+        if (Tariffs == null) return;
+
+        foreach (var tariff in Tariffs)
+        {
+            if (tariff.Id == 0)
+            {
+                _tariffsRepository.InsertTariff(tariff);
+            }
+            else
+            {
+                _tariffsRepository.UpdateTariff(tariff);
+            }
+        }
+        
+        Tariffs = _tariffsRepository.GetAllTariffs() ?? new List<Tariffs>();
     }
 }

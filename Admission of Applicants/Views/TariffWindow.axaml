@@ -85,21 +85,53 @@
 
                 
                 <SplitView.Content>
+                        <Grid Margin="12"
+                              RowDefinitions="Auto *">
+                                
+                                <Border Background="Brown" 
+                                        CornerRadius="8,8,0,0" 
+                                        Padding="10,8">
+                                </Border>
+                                
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" >
+                                        <Button HorizontalAlignment="Left"
+                                                Margin="9,0" 
+                                                Background="Crimson" 
+                                                Foreground="White"
+                                                CornerRadius="8" 
+                                                Padding="10,8"
+                                                Command="{Binding DeleteTariffCommand}"
+                                        >Удалить</Button>
+                                        <Button HorizontalAlignment="Center"
+                                                Background="AntiqueWhite"
+                                                CornerRadius="8,8,8,8" 
+                                                Padding="10,8"
+                                                Command="{Binding AddTariffCommand}"
+                                        >Добавить</Button>
+                                        <Button Margin="9" HorizontalAlignment="Right"
+                                                Background="AntiqueWhite"
+                                                CornerRadius="8,8,8,8" 
+                                                Padding="10,8"
+                                                Command="{Binding SaveTariffsCommand}"
+                                        >Сохранить</Button>
+                                </StackPanel>
                         <DataGrid ItemsSource="{Binding Tariffs}"
+                                  SelectedItem="{Binding SelectedTariff, Mode=TwoWay}"
                                   IsReadOnly="False"
                                   CanUserReorderColumns="True"
                                   CanUserResizeColumns="True"
                                   CanUserSortColumns="True"
                                   GridLinesVisibility="All"
                                   AutoGenerateColumns="False"
-                                  BorderThickness="1" BorderBrush="Gray">
+                                  BorderThickness="1" BorderBrush="Gray"
+                                  Grid.Row="1">
                                 <DataGrid.Columns>
                                         <DataGridTextColumn Header="Название тарифа"  Binding="{Binding TariffName}"/>
                                         <DataGridTextColumn Header="Цена в месяц" Binding="{Binding  CostMonth}" />
                                 </DataGrid.Columns>
                         </DataGrid>
+                        </Grid>
                 </SplitView.Content>
-                
         </SplitView>
         
 </Window>

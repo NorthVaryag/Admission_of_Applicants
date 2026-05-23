@@ -46,4 +46,55 @@ public class TariffsRepository
         }
         return tariffsList;
     }
+    
+    public void InsertTariff(Tariffs tariff)
+    {
+        string sql = "insert into tariffs (tariff_name, cost_per_month) values (@TariffName, @CostMonth)";
+        try
+        {
+            connection.Open();
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@TariffName", tariff.TariffName);
+                mc.Parameters.AddWithValue("@CostMonth", tariff.CostMonth);
+                mc.ExecuteNonQuery();
+            }
+        }
+        catch (Exception e) { Console.WriteLine(e); }
+        finally { connection.Close(); }
+    }
+
+    public void UpdateTariff(Tariffs tariff)
+    {
+        string sql = "update tariffs set tariff_name = @TariffName, cost_per_month = @CostMonth where id = @Id";
+        try
+        {
+            connection.Open();
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@TariffName", tariff.TariffName);
+                mc.Parameters.AddWithValue("@CostMonth", tariff.CostMonth);
+                mc.Parameters.AddWithValue("@Id", tariff.Id);
+                mc.ExecuteNonQuery();
+            }
+        }
+        catch (Exception e) { Console.WriteLine(e); }
+        finally { connection.Close(); }
+    }
+
+    public void DeleteTariff(int id)
+    {
+        string sql = "delete from tariffs where id = @Id";
+        try
+        {
+            connection.Open();
+            using (var mc = new MySqlCommand(sql, connection))
+            {
+                mc.Parameters.AddWithValue("@Id", id);
+                mc.ExecuteNonQuery();
+            }
+        }
+        catch (Exception e) { Console.WriteLine(e); }
+        finally { connection.Close(); }
+    }
 }
