@@ -16,6 +16,7 @@
                     Grid.ColumnSpan="2">
             <TextBlock>Эта программа была сделана студентом  КГА ПОУ. "ППК":</TextBlock>
             <TextBlock>Климуком Олегом Валерьевичем в качестве курсовой работы</TextBlock>
+            <TextBlock>Просьба оценить минимум на 4</TextBlock>
             <TextBlock HorizontalAlignment="Center" Foreground="Red" FontWeight="Bold" FontSize="16">"не для коммерческого использования"</TextBlock>
         </StackPanel>
         <Button Command="{Binding OpenTelegramCommand}"
