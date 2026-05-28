@@ -82,6 +82,15 @@ public partial class MainWindowViewModel : ViewModelBase
     }
     
     [RelayCommand]
+    public void MyWindowStart()
+    {
+        var vm = _serviceProvider.GetRequiredService<MyWindowViewModel>();
+        var win = _serviceProvider.GetRequiredService<MyWindow>();
+        win.DataContext = vm;
+        win.Show();
+    }
+    
+    [RelayCommand]
     public void AddEquipment()
     {
         var emptyEquipment = new Equipment 

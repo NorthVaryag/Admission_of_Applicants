@@ -16,7 +16,8 @@
                    PaneBackground="MidnightBlue">
                 
                 <SplitView.Pane>
-                        <StackPanel Background="#2C3E50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Grid RowDefinitions="* Auto" Background="#2C3E50">
+                        <StackPanel Background="#2C3E50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0">
                                 <Button Background="Transparent" 
                                                 Foreground="White"
                                                 FontSize="16"
@@ -81,6 +82,20 @@
                                         </StackPanel>
                                 </Button>
                         </StackPanel>
+                        <Button Background="Transparent" 
+                                Foreground="#BDC3C7"
+                                Command="{Binding MyWindowStartCommand}"
+                                Height="50" Grid.Row="1"
+                                Margin="5,2"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" Margin="10,0">
+                                        <TextBlock Text=" i  " Margin="0,0,10,0" FontSize="15" FontWeight="Bold"/>
+                                        <TextBlock Text="О приложении"/>
+                                </StackPanel>
+                        </Button>
+                        </Grid>
                 </SplitView.Pane>
 
                 

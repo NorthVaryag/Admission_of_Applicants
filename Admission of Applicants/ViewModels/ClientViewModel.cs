@@ -79,6 +79,15 @@ public partial class ClientViewModel : ViewModelBase
         _closeAction?.Invoke();
     }
     
+    [RelayCommand]
+    public void MyWindowStart()
+    {
+        var vm = _serviceProvider.GetRequiredService<MyWindowViewModel>();
+        var win = _serviceProvider.GetRequiredService<MyWindow>();
+        win.DataContext = vm;
+        win.Show();
+    }
+    
     
     [RelayCommand]
     public void AddClient()
